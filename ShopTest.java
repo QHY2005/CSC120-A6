@@ -5,90 +5,90 @@ public class ShopTest {
 
     @Test
     public void testPrice() {
-        Computer comp = new Computer("Dell", "Intel", 512, 16, "Windows", 2022, 900);
-        assertEquals(900, comp.price);
+        Computer laptop = new Computer("HP Pavilion", "AMD", 1024, 16, "Windows 11", 2026, 222);
+        assertEquals(222, laptop.price);
     }
 
     @Test
     public void testUpdates() {
-        Computer comp = new Computer("Dell", "Intel", 512, 16, "Windows", 2022, 900);
-        comp.setOS("Linux");
-        assertEquals("Linux", comp.operatingSystem);
+        Computer laptop = new Computer("Lenovo ThinkPad", "Intel", 512, 8, "Windows 10", 2005, 222);
+        laptop.setOS("Ubuntu");
+        assertEquals("Ubuntu", laptop.operatingSystem);
     }
 
     @Test
     public void testEmptyInventory() {
-        ResaleShop shop = new ResaleShop();
-        assertEquals(0, shop.inventory.size());
+        ResaleShop store = new ResaleShop();
+        assertEquals(0, store.inventory.size());
     }
 
     @Test
     public void testMemory() {
-        Computer comp = new Computer("Dell", "Intel", 512, 32, "Windows", 2022, 900);
-        assertEquals(32, comp.memory);
+        Computer device = new Computer("Acer Aspire", "Intel", 256, 32, "Windows 11", 2026, 222);
+        assertEquals(32, device.memory);
     }
 
     @Test
     public void testAddsComputer() {
-        ResaleShop shop = new ResaleShop();
-        shop.inventory.clear();
+        ResaleShop store = new ResaleShop();
+        store.inventory.clear();
 
-        Computer comp = new Computer("Dell XPS", "Intel", 512, 16, "Windows", 2022, 900);
-        shop.buy(comp);
+        Computer device = new Computer("Surface Laptop", "Intel", 512, 16, "Windows 11", 2026, 222);
+        store.buy(device);
 
-        assertTrue(shop.inventory.contains(comp));
+        assertTrue(store.inventory.contains(device));
     }
 
     @Test(expected = RuntimeException.class)
     public void testThrowsInventory() {
-        ResaleShop shop = new ResaleShop();
-        shop.inventory.clear();
+        ResaleShop store = new ResaleShop();
+        store.inventory.clear();
 
-        Computer comp = new Computer("Dell XPS", "Intel", 512, 16, "Windows", 2022, 900);
-        shop.inventory.add(comp);
-        shop.buy(comp);
+        Computer device = new Computer("Surface Laptop", "Intel", 512, 16, "Windows 11", 2005, 222);
+        store.inventory.add(device);
+        store.buy(device);
     }
 
     @Test(expected = RuntimeException.class)
     public void testThrowsNotInInventory() {
-        ResaleShop shop = new ResaleShop();
-        shop.inventory.clear();
+        ResaleShop store = new ResaleShop();
+        store.inventory.clear();
 
-        Computer comp = new Computer("Dell XPS", "Intel", 512, 16, "Windows", 2022, 900);
-        shop.sell(comp);
+        Computer device = new Computer("Alienware M15", "Intel", 1024, 32, "Windows 11", 2026, 222);
+        store.sell(device);
     }
 
     @Test
     public void testPrint() {
-        ResaleShop shop = new ResaleShop();
+        ResaleShop store = new ResaleShop();
         try {
-            shop.printInventory();
+            store.printInventory();
         } catch (Exception e) {
-            fail("printInventory should not throw an exception");
+            fail("printInventory should run without throwing an error");
         }
     }
 
     @Test
     public void testRefurbishPrice() {
-        ResaleShop shop = new ResaleShop();
-        shop.inventory.clear();
+        ResaleShop store = new ResaleShop();
+        store.inventory.clear();
 
-        Computer comp = new Computer("Old Laptop", "Intel", 128, 8, "Windows 7", 2010, 100);
-        shop.inventory.add(comp);
+        Computer oldPC = new Computer("Old Dell Latitude", "Intel", 128, 8, "Windows 8", 2005, 222);
+        store.inventory.add(oldPC);
 
-        shop.refurbish(comp, "None");
-        assertEquals(250, comp.price);
+        store.refurbish(oldPC, "None");
+        assertEquals(250, oldPC.price);
     }
 
     @Test
     public void testRefurbishDoesNotChange() {
-        ResaleShop shop = new ResaleShop();
-        shop.inventory.clear();
+        ResaleShop store = new ResaleShop();
+        store.inventory.clear();
 
-        Computer comp = new Computer("MacBook", "Intel", 256, 8, "OldOS", 2019, 500);
-        shop.inventory.add(comp);
+        Computer mac = new Computer("MacBook Air", "Apple M1", 256, 8, "macOS Monterey", 2026, 222);
+        store.inventory.add(mac);
 
-        shop.refurbish(comp, new String("None"));
-        assertEquals("OldOS", comp.operatingSystem);
+        store.refurbish(mac, new String("None"));
+        assertEquals("macOS Monterey", mac.operatingSystem);
     }
 }
